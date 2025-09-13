@@ -1,42 +1,36 @@
-from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton, ReplyKeyboardMarkup, KeyboardButton
+from __future__ import annotations
+from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
+from .states import CHANNEL_URL
 
 def kb_welcome() -> InlineKeyboardMarkup:
-    kb = InlineKeyboardMarkup(inline_keyboard=[[
-        InlineKeyboardButton(text="Продолжить", callback_data="continue")
-    ]])
+    kb = InlineKeyboardMarkup(inline_keyboard=[
+        [InlineKeyboardButton(text="Продолжить", callback_data="continue")]
+    ])
     return kb
 
 def kb_back(to: str) -> InlineKeyboardMarkup:
-    kb = InlineKeyboardMarkup(inline_keyboard=[[
-        InlineKeyboardButton(text="⬅️ Назад", callback_data=f"back:{to}")
-    ]])
-    return kb
+    return InlineKeyboardMarkup(inline_keyboard=[
+        [InlineKeyboardButton(text="⬅️ Назад", callback_data=f"back:{to}")]
+    ])
 
-def kb_menu(channel_url: str | None = None) -> InlineKeyboardMarkup:
+def kb_menu() -> InlineKeyboardMarkup:
     rows = [
         [InlineKeyboardButton(text="📨 Отправить номер администратору", callback_data="send_admin")],
         [InlineKeyboardButton(text="🏆 Регистрация на турнир", callback_data="tournament")],
         [InlineKeyboardButton(text="🎁 Акции", callback_data="actions")],
     ]
-    if channel_url:
-        rows.append([InlineKeyboardButton(text="➡️ Перейти в канал", url=channel_url)])
+    if CHANNEL_URL:
+        rows.append([InlineKeyboardButton(text="➡️ Перейти в канал", url=CHANNEL_URL)])
     rows.append([InlineKeyboardButton(text="⚙️ Настройки", callback_data="settings")])
     return InlineKeyboardMarkup(inline_keyboard=rows)
 
 def kb_settings() -> InlineKeyboardMarkup:
-    return InlineKeyboardMarkup(inline_keyboard=[[
-        InlineKeyboardButton(text="📞 Изменить номер телефона", callback_data="change_phone")
-    ],[
-        InlineKeyboardButton(text="⬅️ Назад в меню", callback_data="back:MENU")
-    ]])
+    return InlineKeyboardMarkup(inline_keyboard=[
+        [InlineKeyboardButton(text="📞 Изменить номер телефона", callback_data="change_phone")],
+        [InlineKeyboardButton(text="⬅️ Назад в меню", callback_data="back:MENU")],
+    ])
 
 def kb_back_to_settings() -> InlineKeyboardMarkup:
-    return InlineKeyboardMarkup(inline_keyboard=[[
-        InlineKeyboardButton(text="⬅️ Назад", callback_data="back:SETTINGS")
-    ]])
-
-def reply_kb_share_contact() -> ReplyKeyboardMarkup:
-    rb = ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True, keyboard=[[
-        KeyboardButton(text="📱 Поделиться номером", request_contact=True)
-    ]])
-    return rb
+    return InlineKeyboardMarkup(inline_keyboard=[
+        [InlineKeyboardButton(text="⬅️ Назад", callback_data="back:SETTINGS")]
+    ])

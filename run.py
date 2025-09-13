@@ -1,16 +1,10 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
+from __future__ import annotations
+import os, sys, asyncio
 
-import asyncio
-from src.bot import create_app
+# гарантируем, что корень проекта в sys.path
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
-async def main():
-    dp, bot, run_polling_forever = await create_app()
-    print("✅ Colizeum Bot (aiogram) is running…")
-    await run_polling_forever()
+from src.app import main
 
 if __name__ == "__main__":
-    try:
-        asyncio.run(main())
-    except KeyboardInterrupt:
-        print("👋 Stopped by user")
+    asyncio.run(main())
